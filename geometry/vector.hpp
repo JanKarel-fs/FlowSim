@@ -28,6 +28,11 @@ inline Point2<T> operator+(const Point2<T>& a, const Vector2<T>& b) {
 }
 
 template <typename T>
+inline Vector2<T> operator+(const Vector2<T>& a, const Vector2<T>& b) {
+  return Vector2<T>(a.x+b.x, a.y+b.y);
+}
+
+template <typename T>
 inline Point2<T> operator-(const Point2<T>& a, const Vector2<T>& b) {
   return Point2<T>(a.x-b.x, a.y-b.y);
 }
@@ -35,6 +40,11 @@ inline Point2<T> operator-(const Point2<T>& a, const Vector2<T>& b) {
 template <typename T>
 inline Vector2<T> operator-(const Point2<T>& a, const Point2<T>& b) {
   return Vector2<T>(b, a);
+}
+
+template <typename T>
+inline Vector2<T> operator-(const Vector2<T>& a, const Vector2<T>& b) {
+  return Vector2<T>(a.x-b.x, a.y-b.y);
 }
 
 template <typename T, typename S>
