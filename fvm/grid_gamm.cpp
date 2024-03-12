@@ -10,7 +10,7 @@ Grid_gamm::Grid_gamm(int M, int N, int ght) {
   nodes.allocate(-ghost, Mnodes+ghost, -ghost, Nnodes+ghost);
   facesI.allocate(-ghost, Mvolumes+ghost, -ghost, Nnodes+ghost);
   facesJ.allocate(-ghost, Mnodes+ghost, -ghost, Nvolumes+ghost);
-  centres.allocate(-ghost, Mvolumes+ghost, -ghost, Nvolumes+ghost);
+  centers.allocate(-ghost, Mvolumes+ghost, -ghost, Nvolumes+ghost);
   volumes.allocate(-ghost, Mvolumes+ghost, -ghost, Nvolumes+ghost);
 
 
@@ -58,14 +58,14 @@ Grid_gamm::Grid_gamm(int M, int N, int ght) {
     //prava hranice
     s = Vector2d(vertex(Mnodes-2, j), vertex(Mnodes-1, j));
     for (int k=1; k<=ghost; k++) {
-      nodes[Mnodes-1 + k][j] = vertex(Mnodes-1, j) + k*s;
+      nodes[Mnodes-1 + k][j].vertex = vertex(Mnodes-1, j) + k*s;
     }
   }
 
   // stredy bunek
   for (int i=-ghost; i<Mvolumes+ghost; i++) {
     for (int j=-ghost; j<Nvolumes+ghost; j++) {
-      centres[i][j] = (vertex(i,j) + vertex(i+1, j)
+      centers[i][j] = (vertex(i,j) + vertex(i+1, j)
 		       + vertex(i+1, j+1) + vertex(i, j+1)) / 4.;
     }
   }
@@ -79,4 +79,6 @@ Grid_gamm::Grid_gamm(int M, int N, int ght) {
       volumes[i][j] = fabs(cross(e, f)) / 2.;
     }
   }
+
+  update();
 }

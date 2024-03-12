@@ -10,5 +10,5 @@ Compressible wall(const Compressible& wInside, const Vector2d& s,
 
   Vector2d rhoU = wInside.rhoU - 2. * dot(wInside.rhoU, n) * n;
 
-  return Compressible(rho, rhou, e);
+  return Compressible(rho, rhoU, e);
  }

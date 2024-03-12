@@ -16,7 +16,7 @@ void Face::updateJ(Grid& g, int i, int j) {
   s = Vector2d(b.y-a.y, a.x-b.x);
 }
 
-double Gird::x(const int& i, const int& j) const {
+double Grid::x(const int& i, const int& j) const {
   return nodes[i][j].vertex.x;
 }
 
@@ -57,7 +57,7 @@ void Grid::update() {
 
   for (int i=-ghost; i<Mnodes+ghost; i++) {
     for (int j=-ghost; j<Nvolumes+ghost; j++) {
-      facesJ[i][j].udateJ(*this, i, j);
+      facesJ[i][j].updateJ(*this, i, j);
     }
   }
 }

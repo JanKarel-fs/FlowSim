@@ -9,7 +9,7 @@ Compressible outlet(const Compressible& wInside, const Vector2d& s,
   const double& rho = wInside.rho;
   const Vector2d& rhoU = wInside.rhoU;
 
-  double p = p0 * pow((kappa-1.)/2. * M2is*M2is + 1, kappa/(1.-kappa));
+  double p = p0 * pow((kappa-1.)/2. * M2is*M2is + 1., kappa/(1.-kappa));
 
   double e = p/(kappa-1.) + 0.5 * (rhoU.x*rhoU.x + rhoU.y*rhoU.y) / rho;
 

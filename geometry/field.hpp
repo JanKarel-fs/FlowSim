@@ -21,7 +21,7 @@ public:
 
   Field2(const Field2& fld2) {
     allocated = false;
-    allocate(fld2.Imin(), fld2.Imax(); fld2.Jmin(), fld2.Jmax());
+    allocate(fld2.Imin(), fld2.Imax(), fld2.Jmin(), fld2.Jmax());
 
     int totalSize = (imax-imin) * (jmax-jmin);
     for (int i=0; i<totalSize; i++) {
@@ -49,7 +49,7 @@ public:
   int Jmax() const {return jmax;}
 
   void allocate(const int& Imin, const int& Imax, const int& Jmin, const int& Jmax) {
-`    if (allocated) {
+    if (allocated) {
       cout << "Pole Field2 uz je naalokovane, pouzijte funkci reallocate!" << endl;
       exit(0);
     }
@@ -79,17 +79,17 @@ public:
     allocate(Imin, Imax, Jmin, Jmax);
   }
 
-  T* operator[](int i) {
+  T* operator[](int i) const {
     int size_j = jmax-jmin;
     return data + (i-imin)*size_j - jmin;
   }
 
   Field2 operator=(const Field2& fld2) {
     if (allocated) {
-      reallocate(fld2.Imin(), fld2.Imax(); fld2.Jmin(), fld2.Jmax());
+      reallocate(fld2.Imin(), fld2.Imax(), fld2.Jmin(), fld2.Jmax());
     }
     else {
-      allocate(fld2.Imin(), fld2.Imax(); fld2.Jmin(), fld2.Jmax());
+      allocate(fld2.Imin(), fld2.Imax(), fld2.Jmin(), fld2.Jmax());
     }
 
     int totalSize = (imax-imin) * (jmax-jmin);

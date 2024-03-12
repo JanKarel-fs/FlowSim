@@ -3,7 +3,7 @@
 
 #include "../fvm/grid.hpp"
 #include "../fvm/cellField.hpp"
-#include "../compressible"
+#include "../compressible.hpp"
 #include "setting.hpp"
 #include "inlet.hpp"
 #include "outlet.hpp"

@@ -2,12 +2,15 @@
 #define COMPRESSIBLE_HPP
 
 #include <cmath>
+#include <algorithm>
 #include "geometry/vector.hpp"
+
+using namespace std;
 
 class Compressible {
 public:
   double rho;
-  Vector2d rhoU
+  Vector2d rhoU;
   double e;
 
   Compressible() {};
@@ -26,16 +29,21 @@ public:
   }
 
   static Compressible (*flux)(const Compressible& wl, const Compressible& wr,
-		    const Vector2d& s);
-
+			      const Vector2d& s);
+  
+  static Compressible Upwind(const Compressible& wl, const Compressible& wr,
+			     const Vector2d& s);
+  
   double p() const;
   double a() const;
   double Ma() const;
 
-  Compressible fabs() const;
-  Compressible min() const;
-  Compressible max() const;
-  Compressible sqrt() const;
+  static Compressible fabs(const Compressible& a);
+  static Compressible min(const Compressible& a,
+			  const Compressible& b);
+  static Compressible max(const Compressible& a,
+			  const Compressible& b);
+  static Compressible sqrt(const Compressible& a);
 };
 
 inline Compressible operator+(const Compressible& a, const Compressible& b) {

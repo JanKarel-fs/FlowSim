@@ -24,7 +24,7 @@ void setBoundaries(CellField<Compressible>& w, const Grid& g,
 
     wOut = outlet(wInside, s, setting);
 
-    for (int k=1; k<gh; k++) {
+    for (int k=1; k<=gh; k++) {
       w[M-1+k][j] = wOut;
     }
   }
@@ -33,7 +33,7 @@ void setBoundaries(CellField<Compressible>& w, const Grid& g,
   for (int i=-gh; i<M+gh; i++) {
     // dolni hranice
     Compressible wInside = w[i][0];
-    Vector2d s = g.faceI(i, 0);
+    Vector2d s = g.faceI(i, 0).s;
 
     Compressible wOut = wall(wInside, s, setting);
 
