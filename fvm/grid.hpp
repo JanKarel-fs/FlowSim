@@ -1,9 +1,12 @@
 #ifndef GRID_HPP
 #define GRID_HPP
 
+#include <string>
 #include "../geometry/point.hpp"
 #include "../geometry/vector.hpp"
 #include "../geometry/field.hpp"
+
+using namespace std;
 
 class Grid;
 
@@ -16,6 +19,7 @@ class Face {
 public:
   Point2d center;
   Vector2d s;    // normalovy vektor prenasobeny velikosti steny
+  string name;
 
   void updateI(Grid& g, int i, int j);
   void updateJ(Grid& g, int i, int j);

@@ -1,7 +1,7 @@
 #include "setBoundaries.hpp"
 
 void setBoundaries(CellField<Compressible>& w, const Grid& g,
-		   const Setting& setting) {
+		   const Setting& setting, const map<string, bCondition>& BC) {
   int M = w.M();
   int N = w.N();
   int gh = w.gh();
@@ -10,9 +10,11 @@ void setBoundaries(CellField<Compressible>& w, const Grid& g,
   for (int j=0; j<w.N(); j++) {
     // leva hranice (vstup)
     Compressible wInside = w[0][j];
-    Vector2d s = g.faceJ(0, j).s;
+    Face f = g.faceJ(0, j);
 
-    Compressible wOut = inlet(wInside, s, setting);
+    auto it = BC.find(f.name);
+    // Chybi otestovani, jestli jsme nasli danou okrajovou podminku
+    Compressible wOut = it->second(wInside, f.s, setting);
 
     for (int k=1; k<=gh; k++) {
       w[-k][j] = wOut;
@@ -20,9 +22,10 @@ void setBoundaries(CellField<Compressible>& w, const Grid& g,
 
     // prava hranice (vystup)
     wInside = w[M-1][j];
-    s = g.faceJ(M, j).s;
+    f = g.faceJ(M, j);
 
-    wOut = outlet(wInside, s, setting);
+    it = BC.find(f.name);
+    wOut = it->second(wInside, f.s, setting);
 
     for (int k=1; k<=gh; k++) {
       w[M-1+k][j] = wOut;
@@ -33,9 +36,10 @@ void setBoundaries(CellField<Compressible>& w, const Grid& g,
   for (int i=-gh; i<M+gh; i++) {
     // dolni hranice
     Compressible wInside = w[i][0];
-    Vector2d s = g.faceI(i, 0).s;
+    Face f = g.faceI(i, 0);
 
-    Compressible wOut = wall(wInside, s, setting);
+    auto it = BC.find(f.name);
+    Compressible wOut = it->second(wInside, f.s, setting);
 
     for (int k=1; k<=gh; k++) {
       w[i][-k] = wOut;
@@ -43,9 +47,10 @@ void setBoundaries(CellField<Compressible>& w, const Grid& g,
 
     // horni hranice
     wInside = w[i][N-1];
-    s = g.faceI(i, N).s;
-
-    wOut = wall(wInside, s, setting);
+    f = g.faceI(i, N);
+    
+    it = BC.find(f.name);
+    wOut = it->second(wInside, f.s, setting);
 
     for (int k=1; k<=gh; k++) {
       w[i][N-1+k] = wOut;

@@ -6,6 +6,7 @@
 #include "../fvm/nodeField.hpp"
 #include "../fvm/grid.hpp"
 #include "../compressible.hpp"
+#include "vtkOutput.hpp"
 
 using namespace std;
 

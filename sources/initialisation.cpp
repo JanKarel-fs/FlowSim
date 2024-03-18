@@ -5,16 +5,23 @@ void initialisation(CellField<Compressible>& w, const Setting& setting) {
   system("mkdir -p results");  // vytvoreni slozky results - Linux
   // system("md -p results");  // vytvoreni slozky results - Windows
   system("rm -f results/*");   // smazani obsahu slozky results - Linux
-  // system("del -f results/*"); // Windows
+  // system("del -f results\*"); // Windows
 
-  
-  Compressible::flux = Compressible::Upwind;
+  switch (setting.flux) {
+  case 1:
+    Compressible::flux = Compressible::Upwind;
+    break;
+  default:
+    cout << "No a such possibility for a flux splitter!" << endl;
+    cout << "Possibilities are: 1 - Upwind" << endl;
+    exit(10);
+  }
 
   Compressible::kappa = setting.kappa;
 
-  double rhoInit = 0.9;
-  Vector2d uInit(0.5, 0.);
-  double pInit = 0.8;
+  const double& rhoInit = setting.rhoInit;
+  const Vector2d& uInit = setting.uInit;
+  const double& pInit = setting.pInit;
 
   double eInit = pInit / (Compressible::kappa - 1.) + 0.5 * rhoInit
                * (uInit.x*uInit.x + uInit.y*uInit.y);

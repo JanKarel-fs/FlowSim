@@ -1,0 +1,40 @@
+GRID
+grid_type		1			// (1) gamm
+mCells			150
+nCells			50
+ghostCells		1
+//////////////////////////////////////////////////////////////////////////////
+INITIAL_CONDITIONS
+rhoInit			0.9			// initial density
+uInit			0.5			// initial x velocity component
+vInit			0			// initial y velocity component
+pInit			0.8			// initial pressure
+//////////////////////////////////////////////////////////////////////////////
+BOUNDARY_CONDITIONS
+numOfBoundaries		3			// pocet typu hranic
+
+boundary1		Inlet			// jmeno hranice v souboru se siti
+bcType1			inlet			// pozadovana okrajova podminka
+
+boundary2		Outlet
+bcType2			outlet
+
+boundary3		Wall
+bcType3			wall
+
+alpha			0			// inlet flow angel [deg]
+M2is			0.675			// isoentropic Mach number
+//////////////////////////////////////////////////////////////////////////////
+FLUX_SPLITTER
+flux			1			// (1) Upwind
+//////////////////////////////////////////////////////////////////////////////
+TIME
+CFL			0.3
+//////////////////////////////////////////////////////////////////////////////
+PHYSICAL_VALUES
+kappa			1.4
+rho0			1
+p0			1
+//////////////////////////////////////////////////////////////////////////////
+SAVING
+stop			100000			// total number of interations
