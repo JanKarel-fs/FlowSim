@@ -30,6 +30,7 @@ public:
   double CFL;
   double M2is;
   int stop;
+  int spatialOrder;
 
   Setting(const string& fileName);
   ~Setting() {};

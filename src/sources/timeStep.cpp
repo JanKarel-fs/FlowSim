@@ -7,6 +7,7 @@ double timeStep(const CellField<Compressible>& w, const Grid& g,
   int M = g.Mvol();
   int N = g.Nvol();
 
+#pragma omp parallel for reduction(min:dt)
   for (int i=0; i<M; i++){
     for (int j=0; j<N; j++) {
       const Compressible& wij = w[i][j];

@@ -5,7 +5,7 @@ Setting::Setting(const string& fileName) {
   sections.insert("GRID");  sections.insert("INITIAL_CONDITIONS");
   sections.insert("BOUNDARY_CONDITIONS");  sections.insert("FLUX_SPLITTER");
   sections.insert("TIME");  sections.insert("PHYSICAL_VALUES");
-  sections.insert("SAVING");
+  sections.insert("SAVING");  sections.insert("ACCURACY");
 
   map<string, vector<string> > dataFile;
 
@@ -59,6 +59,10 @@ Setting::Setting(const string& fileName) {
   // nacitani informaci o numerickem toku
   section = "FLUX_SPLITTER";
   findSection(dataFile, "flux", section, flux);
+
+  // nacitani informaci o numerickem toku
+  section = "ACCURACY";
+  findSection(dataFile, "spatialOrder", section, spatialOrder);
 
   // nacitani informaci o case
   section = "TIME";
