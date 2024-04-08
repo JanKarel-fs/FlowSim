@@ -38,20 +38,22 @@ int main() {
   }
 
   CellField<Compressible> w(g);
-  CellField<Compressible> wn(g);
+  CellField<Compressible> wStar(g);
   CellField<Compressible> rez(g);
 
   initialisation(w, setting);
 
   for (int i=0; i<setting.stop; i++) {
-    setBoundaries(w, g, setting, BC);
-
     double dt = timeStep(w, g, setting);
 
-    computeRez(w, rez, g);
+    wStar = w;
+    for (int k=0; k<setting.alphaRK.size(); k++) {
+      setBoundaries(wStar, g, setting, BC);
+      computeRez(wStar, rez, g);
 
-    wn = w + dt * rez;
-    w = wn;
+      wStar = w + dt * setting.alphaRK[k] * rez;
+    }
+    w = wStar;
 
     if (i%10 == 0) {
       saveNormResidual(rez, g, i);

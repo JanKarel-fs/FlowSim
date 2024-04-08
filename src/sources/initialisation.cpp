@@ -22,9 +22,24 @@ void initialisation(CellField<Compressible>& w, const Setting& setting) {
     grad<Compressible> = zeroGrad<Compressible>;
     limiter<Compressible> = zeroLimiter<Compressible>;
     break;
+  case 2:
+    grad<Compressible> = gradLSM<Compressible>;
+    switch(setting.limiter) {
+    case 1:
+      limiter<Compressible> = barthJespersen<Compressible>;
+      break;
+    case 2:
+      limiter<Compressible> = venkatakrishnan<Compressible>;
+      break;
+    default:
+      cout << "No a such possibility for a limiter!" << endl;
+      cout << "Possibilities are: 1 - BarthJespersen, 2 - Venkatakrishnan" << endl;
+      exit(12);
+    }
+    break;
   default:
     cout << "No a such possibility for a spatial order!" << endl;
-    cout << "Possibilities are: 1 - 1st order" << endl;
+    cout << "Possibilities are: 1 - 1st order, 2 - 2nd order" << endl;
     exit(11);
   }
 

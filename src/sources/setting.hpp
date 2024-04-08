@@ -1,9 +1,11 @@
 #ifndef SETTING_HPP
 #define SETTING_HPP
 
+#include <iostream>
 #include <string>
 #include <set>
 #include <map>
+#include <vector>
 #include <cstdlib>
 #include "../geometry/vector.hpp"
 #include "loadDataFile.hpp"
@@ -31,6 +33,9 @@ public:
   double M2is;
   int stop;
   int spatialOrder;
+  int temporalOrder;
+  vector<double> alphaRK;
+  int limiter;
 
   Setting(const string& fileName);
   ~Setting() {};

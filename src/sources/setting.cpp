@@ -63,6 +63,22 @@ Setting::Setting(const string& fileName) {
   // nacitani informaci o numerickem toku
   section = "ACCURACY";
   findSection(dataFile, "spatialOrder", section, spatialOrder);
+  findSection(dataFile, "temporalOrder", section, temporalOrder);
+  switch (temporalOrder) {
+  case 1:
+    alphaRK.resize(1);
+    alphaRK[0] = 1.;
+    break;
+  case 2:
+    alphaRK.resize(3);
+    alphaRK[0] = 0.5;  alphaRK[1] = 0.5;  alphaRK[2] = 1.;
+    break;
+  default:
+    cout << "No a such possibility for a temporal order!" << endl;
+    cout << "Possibilities are: 1 - 1st order, 2 - 2nd order" << endl;
+    exit(11);
+  }
+  findSection(dataFile, "limiter", section, limiter);
 
   // nacitani informaci o case
   section = "TIME";

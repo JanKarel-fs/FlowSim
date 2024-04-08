@@ -8,6 +8,9 @@
 #include "fvm/grad.hpp"
 #include "fvm/zeroLimiter.hpp"
 #include "fvm/zeroGrad.hpp"
+#include "fvm/barthJespersen.hpp"
+#include "fvm/venkatakrishnan.hpp"
+#include "fvm/gradLSM.hpp"
 #include "../compressible.hpp"
 #include "setting.hpp"
 

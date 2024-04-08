@@ -29,7 +29,10 @@ FLUX_SPLITTER
 flux			1			// (1) Upwind
 //////////////////////////////////////////////////////////////////////////////
 ACCURACY
-spatialOrder		1			// 1 - 1st order
+temporalOrder		2			// 1 - 1st order, 2 - 2nd order
+spatialOrder		2			// 1 - 1st order, 2 - 2nd
+order
+limiter			2			// 1 - BarthJespersen, 2 - Venkatakrishnan
 //////////////////////////////////////////////////////////////////////////////
 TIME
 CFL			0.3

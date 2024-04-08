@@ -1,7 +1,9 @@
 #ifndef COMPRESSIBLE_HPP
 #define COMPRESSIBLE_HPP
 
+#include <iostream>
 #include <cmath>
+#include <cstdlib>
 #include <algorithm>
 #include "geometry/vector.hpp"
 
@@ -27,6 +29,38 @@ public:
   inline void ones() {
     rho=1.; rhoU = Vector2d(1., 1.); e=1.;
   }
+
+  double& operator[](int k) {
+    switch (k) {
+    case 0: return rho;
+      break;
+    case 1: return rhoU.x;
+      break;
+    case 2: return rhoU.y;
+      break;
+    case 3: return e;
+      break;
+    default: cout << "Class compressible: out of a range of an operator []!" << endl;
+      exit(11);
+    }
+  }
+
+  double operator[](int k) const {
+    switch (k) {
+    case 0: return rho;
+      break;
+    case 1: return rhoU.x;
+      break;
+    case 2: return rhoU.y;
+      break;
+    case 3: return e;
+      break;
+    default: cout << "Class compressible: out of a range of an operator []!" << endl;
+      exit(11);
+    }
+  }
+
+  static const int nVars = 4;
 
   static Compressible (*flux)(const Compressible& wl, const Compressible& wr,
 			      const Vector2d& s);
