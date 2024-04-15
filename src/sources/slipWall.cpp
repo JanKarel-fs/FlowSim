@@ -1,7 +1,7 @@
-#include "wall.hpp"
+#include "slipWall.hpp"
 
-Compressible wall(const Compressible& wInside, const Vector2d& s,
-		  const Setting& setting) {
+Compressible slipWall(const Compressible& wInside, const Vector2d& s,
+		      const Setting& setting) {
 
   Vector2d n = s / s.length();
 

@@ -1,7 +1,10 @@
 #ifndef GRID_HPP
 #define GRID_HPP
 
+#include <vector>
+#include <map>
 #include <string>
+#include <utility>
 #include "../geometry/point.hpp"
 #include "../geometry/vector.hpp"
 #include "../geometry/field.hpp"
@@ -10,9 +13,12 @@ using namespace std;
 
 class Grid;
 
+typedef void (*coefficients)(Grid& g);
+
 class Node {
 public:
   Point2d vertex;
+  vector<double> alpha;
 };
 
 class Face {
@@ -50,10 +56,17 @@ public:
   double y(const int& i, const int& j) const; // y-ova souradnice vrcholu ij
   Point2d vertex(const int& i, const int& j) const;  // souradnice vrcholu ij
   Node node(const int& i, const int& j) const; // vrchol ij
+  vector<double> alpha(const int& i, const int& j) const;
   Face faceI(const int& i, const int& j) const;
   Face faceJ(const int& i, const int& j) const;
   double volume(const int& i, const int& j) const;  // objem bunky ij
   Point2d center(const int& i, const int& j) const; // stred bunky ij
+
+  static void (*computeAlphaNode)(Grid& g);
+  static void computeAlphaNodeWeight(Grid& g);
+  static void computeAlphaNodeLSM(Grid& g);
+
+  static map<string, coefficients> mCoefficients;
 
   void update();
 };

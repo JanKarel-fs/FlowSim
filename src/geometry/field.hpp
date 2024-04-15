@@ -84,7 +84,7 @@ public:
     return data + (i-imin)*size_j - jmin;
   }
 
-  Field2 operator=(const Field2& fld2) {
+  Field2& operator=(const Field2& fld2) {
     if (allocated) {
       reallocate(fld2.Imin(), fld2.Imax(), fld2.Jmin(), fld2.Jmax());
     }

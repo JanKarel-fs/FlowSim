@@ -1,17 +1,17 @@
 GRID
-grid_type		1			// (1) gamm
-mCells			150
-nCells			50
+grid_type		2			// (1) gamm, (2) X,Y files
+name1			X
+name2			Y
 ghostCells		1
 //////////////////////////////////////////////////////////////////////////////
 INITIAL_CONDITIONS
-rhoInit			0.9			// initial density
-uInit			0.5			// initial x velocity component
+rhoInit			1.0201201598403826	// initial density
+uInit			0			// initial x velocity component
 vInit			0			// initial y velocity component
-pInit			0.8			// initial pressure
+pInit			18			// initial pressure
 //////////////////////////////////////////////////////////////////////////////
 BOUNDARY_CONDITIONS
-numOfBoundaries		3			// pocet typu hranic
+numOfBoundaries		5			// pocet typu hranic
 
 boundary1		Inlet			// jmeno hranice v souboru se siti
 bcType1			inlet			// pozadovana okrajova podminka
@@ -20,32 +20,38 @@ boundary2		Outlet
 bcType2			outlet
 
 boundary3		Wall
-bcType3			slipWall
+bcType3			noSlipWall
 
-alpha			0			// inlet flow angel [deg]
-M2is			0.675			// isoentropic Mach number
+boundary4		Lower
+bcType4			symmetry
+
+boundary5		Upper
+bcType5			homogeneousNeumann
+
+alpha			0			// inlet flow angel
+M2is			0.2			// isoentropic Mach number
+//////////////////////////////////////////////////////////////////////////////
+ACCURACY
+temporalOrder		2			//(1) 1st order, (2) 2nd order
+spatialOrder		2			//(1) 1st order, (2) 2nd order
+limiter			1			//(1) Barth-Jespersen, (2) Venkatakrishnan
 //////////////////////////////////////////////////////////////////////////////
 FLUX_SPLITTER
 flux			1			// (1) Upwind
 //////////////////////////////////////////////////////////////////////////////
-ACCURACY
-temporalOrder		1			// 1 - 1st order, 2 - 2nd order
-spatialOrder		1			// 1 - 1st order, 2 - 2nd
-limiter			2			// 1 - BarthJespersen, 2 - Venkatakrishnan
-//////////////////////////////////////////////////////////////////////////////
-TIME
-CFL			0.3
-//////////////////////////////////////////////////////////////////////////////
 SYSTEM
 convection		1			// (0) off, (1) on
-diffusion		0			// (0) off, (1) on
+diffusion		1			// (0) off, (1) on
 nodeWeightType		LSM			// LSM, Weight
+//////////////////////////////////////////////////////////////////////////////
+TIME
+CFL			0.15
 //////////////////////////////////////////////////////////////////////////////
 PHYSICAL_VALUES
 kappa			1.4
-rho0			1
-p0			1
-R			287.1
+rho0			1.0201201598403826
+p0			18.362162877126892
+R			0.06196954073134
 Pr			0.72
 //////////////////////////////////////////////////////////////////////////////
 SAVING

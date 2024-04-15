@@ -5,9 +5,14 @@
 #include <cmath>
 #include <cstdlib>
 #include <algorithm>
+#include <utility>
 #include "geometry/vector.hpp"
 
+#include "primitiveVars.hpp"
+
 using namespace std;
+
+class PrimitiveVars;
 
 class Compressible {
 public:
@@ -21,6 +26,10 @@ public:
   ~Compressible() {};
 
   static double kappa;
+  static double R;      // merna plynova konstanta (nekorektni znaceni)
+  static double cp;
+  static double cv;
+  static double Pr;
 
   inline void zero() {
     rho=0.; rhoU = Vector2d(0., 0.); e=0.;
@@ -67,10 +76,15 @@ public:
   
   static Compressible Upwind(const Compressible& wl, const Compressible& wr,
 			     const Vector2d& s);
+
+  static Compressible fluxDissipative(const Compressible& wFace,
+				      const Vector2<PrimitiveVars>& gradPvars, const Vector2d& s);
   
   double p() const;
   double a() const;
   double Ma() const;
+  double T() const;
+  double mu() const;
 
   static Compressible fabs(const Compressible& a);
   static Compressible min(const Compressible& a,

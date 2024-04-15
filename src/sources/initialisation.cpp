@@ -44,6 +44,10 @@ void initialisation(CellField<Compressible>& w, const Setting& setting) {
   }
 
   Compressible::kappa = setting.kappa;
+  Compressible::R = setting.R;
+  Compressible::Pr = setting.Pr;
+  Compressible::cv = Compressible::R / (Compressible::kappa - 1.);
+  Compressible::cp = Compressible::cv * Compressible::kappa;
 
   const double& rhoInit = setting.rhoInit;
   const Vector2d& uInit = setting.uInit;

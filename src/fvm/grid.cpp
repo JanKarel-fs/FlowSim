@@ -32,6 +32,10 @@ Node Grid::node(const int& i, const int& j) const {
   return nodes[i][j];
 }
 
+vector<double> Grid::alpha(const int& i, const int& j) const {
+  return nodes[i][j].alpha;
+}
+
 Face Grid::faceI(const int& i, const int& j) const {
   return facesI[i][j];
 }
@@ -61,3 +65,70 @@ void Grid::update() {
     }
   }
 }
+
+void Grid::computeAlphaNodeWeight(Grid& g) {
+  for (int i=0; i<g.Mnd(); i++) {
+    for (int j=0; j<g.Nnd(); j++) {
+      double volume = g.volume(i-1, j) + g.volume(i,j)
+	            + g.volume(i-1, j-1) + g.volume(i, j-1);
+
+      Node& nd = g.nodes[i][j];
+      nd.alpha.resize(4);
+
+      nd.alpha[0] = g.volume(i-1, j) / volume;
+      nd.alpha[1] = g.volume(i, j) / volume;
+      nd.alpha[2] = g.volume(i-1, j-1) / volume;
+      nd.alpha[3] = g.volume(i, j-1) / volume;
+    }
+  }
+}
+
+void Grid::computeAlphaNodeLSM(Grid& g) {
+  for (int i=0; i<g.Mnd(); i++) {
+    for (int j=0; j<g.Nnd(); j++) {
+      Point2d V = g.vertex(i, j);
+
+      vector<Point2d> centers(4);
+      centers[0] = g.center(i-1, j);
+      centers[1] = g.center(i, j);
+      centers[2] = g.center(i-1, j-1);
+      centers[3] = g.center(i, j-1);
+
+      double Rx = 0.;
+      double Ry = 0.;
+      double Ixx = 0.;
+      double Iyy = 0.;
+      double Ixy = 0.;
+
+      for (int k=0; k<centers.size(); k++) {
+	double Jx = centers[k].x - V.x;
+	double Jy = centers[k].y - V.y;
+
+	Rx += Jx;
+	Ry += Jy;
+	Ixx += Jx * Jx;
+	Iyy += Jy * Jy;
+	Ixy += Jx * Jy;
+      }
+
+      double D = Ixx * Iyy - Ixy * Ixy;
+
+      double lx = (Ry*Ixy - Rx*Iyy) / D;
+      double ly = (Rx*Ixy - Ry*Ixx) / D;
+
+      Node& nd = g.nodes[i][j];
+      int N = centers.size();
+
+      nd.alpha.resize(N);
+      for (int k=0; k<centers.size(); k++) {
+	nd.alpha[k] = (1. + lx*(centers[k].x - V.x) + ly*(centers[k].y - V.y))
+	            / (N + lx*Rx + ly*Ry);
+      }
+    }
+  }
+}
+
+void (*Grid::computeAlphaNode)(Grid& g);
+
+map<string, coefficients> Grid::mCoefficients = {pair<string, coefficients>("Weight", computeAlphaNodeWeight),
+						 pair<string, coefficients>("LSM", computeAlphaNodeLSM)};

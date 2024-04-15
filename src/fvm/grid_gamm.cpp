@@ -1,6 +1,6 @@
 #include "grid_gamm.hpp"
 
-Grid_gamm::Grid_gamm(int M, int N, int ght) {
+Grid_gamm::Grid_gamm(int M, int N, int ght, string type) {
   Mvolumes = M;
   Nvolumes = N;
   Mnodes = M + 1;
@@ -99,4 +99,23 @@ Grid_gamm::Grid_gamm(int M, int N, int ght) {
       if (i>=Mnodes-1) facesJ[i][j].name = "Outlet";
     }
   }
+  
+  map<string, coefficients>::iterator it;
+
+  it = mCoefficients.find(type);
+
+  if (it != mCoefficients.end()) {
+    computeAlphaNode = it->second;
+  }
+  else {
+    cout << "No a such possibility for a node weight computation!" << endl;
+    cout << "Possibilities are: ";
+    for (it=mCoefficients.begin(); it!=mCoefficients.end(); it++) {
+      cout << it->first << ", ";
+    }
+    cout << endl;
+    exit(21);
+  }
+
+  computeAlphaNode(*this);
 }

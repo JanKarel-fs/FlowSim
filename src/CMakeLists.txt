@@ -29,5 +29,5 @@ SET(DIRS fvm geometry saving sources)
 INCLUDE_DIRECTORIES(${DIRS} ${PROJECT_SOURCE_DIR})
 SUBDIRS(${DIRS})
 
-ADD_EXECUTABLE(FlowSim main.cpp compressible.cpp)
+ADD_EXECUTABLE(FlowSim main.cpp compressible.cpp primitiveVars.cpp)
 TARGET_LINK_LIBRARIES(FlowSim Fvm Saving Sources)

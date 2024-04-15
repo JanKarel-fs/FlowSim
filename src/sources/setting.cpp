@@ -4,7 +4,8 @@ Setting::Setting(const string& fileName) {
   set<string> sections;
   sections.insert("GRID");  sections.insert("INITIAL_CONDITIONS");
   sections.insert("BOUNDARY_CONDITIONS");  sections.insert("FLUX_SPLITTER");
-  sections.insert("TIME");  sections.insert("PHYSICAL_VALUES");
+  sections.insert("TIME");  sections.insert("SYSTEM");
+  sections.insert("PHYSICAL_VALUES");
   sections.insert("SAVING");  sections.insert("ACCURACY");
 
   map<string, vector<string> > dataFile;
@@ -12,6 +13,8 @@ Setting::Setting(const string& fileName) {
   loadDataFile(fileName, sections, dataFile);
 
   // nacitani informaci o siti
+  mCells = 0;
+  nCells = 0;
   string section = "GRID";
   findSection(dataFile, "grid_type", section, grid_type);
   switch (grid_type) {
@@ -19,8 +22,12 @@ Setting::Setting(const string& fileName) {
     findSection(dataFile, "mCells", section, mCells);
     findSection(dataFile, "nCells", section, nCells);
     break;
+  case 2:
+    findSection(dataFile, "name1", section, name1);
+    findSection(dataFile, "name2", section, name2);
+    break;
   default:
-    cout << "There is no a such possibility for a grid_type!" << endl;
+    cout << "There is no a such possibility for a grid_type, possibilities are: 1 for grid type GAMM, 2 for a grid type XY!" << endl;
     exit(1);
   }
   findSection(dataFile, "ghostCells", section, ghostCells);
@@ -84,9 +91,17 @@ Setting::Setting(const string& fileName) {
   section = "TIME";
   findSection(dataFile, "CFL", section, CFL);
 
+  // nacitani informaci o systemu
+  section = "SYSTEM";
+  findSection(dataFile, "convection", section, convection);
+  findSection(dataFile, "diffusion", section, diffusion);
+  findSection(dataFile, "nodeWeightType", section, nodeWeightType);
+
   // nacitani informaci o fyzikalnich promennych
   section = "PHYSICAL_VALUES";
   findSection(dataFile, "kappa", section, kappa);
+  findSection(dataFile, "R", section, R);
+  findSection(dataFile, "Pr", section, Pr);
   findSection(dataFile, "rho0", section, rho0);
   findSection(dataFile, "p0", section, p0);
 

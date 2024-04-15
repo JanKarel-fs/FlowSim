@@ -19,6 +19,8 @@ public:
   int mCells;
   int nCells;
   int ghostCells;
+  string name1;
+  string name2;
   double rhoInit;
   double pInit;
   Vector2d uInit;
@@ -29,6 +31,8 @@ public:
   double rho0;
   double alpha;
   double kappa;
+  double R;
+  double Pr;
   double CFL;
   double M2is;
   int stop;
@@ -36,6 +40,9 @@ public:
   int temporalOrder;
   vector<double> alphaRK;
   int limiter;
+  int convection;
+  int diffusion;
+  string nodeWeightType;
 
   Setting(const string& fileName);
   ~Setting() {};
