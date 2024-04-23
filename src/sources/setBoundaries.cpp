@@ -1,7 +1,7 @@
 #include "setBoundaries.hpp"
 
 void setBoundaries(CellField<Compressible>& w, const Grid& g,
-		   const Setting& setting, const map<string, bCondition>& BC) {
+		   const Setting& setting, const map<string, bcWithJacobian>& BC) {
   int M = w.M();
   int N = w.N();
   int gh = w.gh();
@@ -14,7 +14,7 @@ void setBoundaries(CellField<Compressible>& w, const Grid& g,
 
     auto it = BC.find(f.name);
     // Chybi otestovani, jestli jsme nasli danou okrajovou podminku
-    Compressible wOut = it->second(wInside, f.s, setting);
+    Compressible wOut = it->second.first(wInside, f.s, setting);
 
     for (int k=1; k<=gh; k++) {
       w[-k][j] = wOut;
@@ -25,7 +25,7 @@ void setBoundaries(CellField<Compressible>& w, const Grid& g,
     f = g.faceJ(M, j);
 
     it = BC.find(f.name);
-    wOut = it->second(wInside, f.s, setting);
+    wOut = it->second.first(wInside, f.s, setting);
 
     for (int k=1; k<=gh; k++) {
       w[M-1+k][j] = wOut;
@@ -39,7 +39,7 @@ void setBoundaries(CellField<Compressible>& w, const Grid& g,
     Face f = g.faceI(i, 0);
 
     auto it = BC.find(f.name);
-    Compressible wOut = it->second(wInside, f.s, setting);
+    Compressible wOut = it->second.first(wInside, f.s, setting);
 
     for (int k=1; k<=gh; k++) {
       w[i][-k] = wOut;
@@ -50,7 +50,7 @@ void setBoundaries(CellField<Compressible>& w, const Grid& g,
     f = g.faceI(i, N);
     
     it = BC.find(f.name);
-    wOut = it->second(wInside, f.s, setting);
+    wOut = it->second.first(wInside, f.s, setting);
 
     for (int k=1; k<=gh; k++) {
       w[i][N-1+k] = wOut;

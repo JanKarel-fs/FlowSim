@@ -7,14 +7,55 @@ void initialisation(CellField<Compressible>& w, const Setting& setting) {
   system("rm -f results/*");   // smazani obsahu slozky results - Linux
   // system("del -f results\*"); // Windows
 
-  switch (setting.flux) {
-  case 1:
-    Compressible::flux = Compressible::Upwind;
+  switch (setting.solver) {
+  case 1: {
+    step<Compressible> = stepExplicit<Compressible>;
+    switch (setting.flux) {
+    case 1:
+      Compressible::flux = Compressible::Upwind;
+      break;
+    case 2:
+      Compressible::flux = Compressible::Rusanov;
+      break;
+    default:
+      cout << "No a such possibility for a flux splitter!" << endl;
+      cout << "Possibilities are: 1 - Upwind, 2 - Rusanov" << endl;
+      exit(10);
+    }
+  }
     break;
+
+  case 2: {
+    step<Compressible> = stepImplicit<Compressible>;
+    switch (setting.flux) {
+    case 1:
+      Compressible::fluxImplicit = Compressible::UpwindImplicit;
+      break;
+    case 2:
+      Compressible::fluxImplicit = Compressible::RusanovImplicit;
+      break;
+    default:
+      cout << "No a such possibility for a flux splitter!" << endl;
+      cout << "Possibilities: 1 - Upwind, 2 - Rusanov" << endl;
+      exit(1);
+    }
+
+    switch (setting.temporalOrder) {
+    case 1: timeIncrement<Compressible> = timeIncrementFirstOrder<Compressible>;
+      break;
+    case 2:  timeIncrement<Compressible> = timeIncrementSecondOrder<Compressible>;
+      break;
+    default:
+      cout << "No such temporal order!" << endl;
+      exit(0);
+    }
+  }
+    break;
+
   default:
-    cout << "No a such possibility for a flux splitter!" << endl;
-    cout << "Possibilities are: 1 - Upwind" << endl;
-    exit(10);
+    cout << "There is no possible choice for a solver!" << endl;
+    cout << "Possibilities are 1 for explicit solver, 2 for implicit solver." << endl;
+    exit(1);
   }
 
   switch(setting.spatialOrder) {

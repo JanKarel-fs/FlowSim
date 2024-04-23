@@ -40,6 +40,7 @@ public:
   int temporalOrder;
   vector<double> alphaRK;
   int limiter;
+  int solver;
   int convection;
   int diffusion;
   string nodeWeightType;

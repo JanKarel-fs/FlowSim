@@ -13,6 +13,12 @@
 #include "fvm/gradLSM.hpp"
 #include "../compressible.hpp"
 #include "setting.hpp"
+#include "step.hpp"
+#include "stepExplicit.hpp"
+#include "stepImplicit.hpp"
+#include "fvm/timeIncrement.hpp"
+#include "fvm/timeIncrementFirstOrder.hpp"
+#include "fvm/timeIncrementSecondOrder.hpp"
 
 using namespace std;
 

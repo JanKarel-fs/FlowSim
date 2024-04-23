@@ -11,6 +11,6 @@
 using namespace std;
 
 void setBoundaries(CellField<Compressible>& w, const Grid& g,
-		   const Setting& setting, const map<string, bCondition>& BC);
+		   const Setting& setting, const map<string, bcWithJacobian>& BC);
 
 #endif
