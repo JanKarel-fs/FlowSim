@@ -10,35 +10,15 @@ void initialisation(CellField<Compressible>& w, const Setting& setting) {
   switch (setting.solver) {
   case 1: {
     step<Compressible> = stepExplicit<Compressible>;
-    switch (setting.flux) {
-    case 1:
-      Compressible::flux = Compressible::Upwind;
-      break;
-    case 2:
-      Compressible::flux = Compressible::Rusanov;
-      break;
-    default:
-      cout << "No a such possibility for a flux splitter!" << endl;
-      cout << "Possibilities are: 1 - Upwind, 2 - Rusanov" << endl;
-      exit(10);
-    }
+    FluxList flxList;
+    Compressible::flux = flxList[setting.flux];
   }
     break;
 
   case 2: {
     step<Compressible> = stepImplicit<Compressible>;
-    switch (setting.flux) {
-    case 1:
-      Compressible::fluxImplicit = Compressible::UpwindImplicit;
-      break;
-    case 2:
-      Compressible::fluxImplicit = Compressible::RusanovImplicit;
-      break;
-    default:
-      cout << "No a such possibility for a flux splitter!" << endl;
-      cout << "Possibilities: 1 - Upwind, 2 - Rusanov" << endl;
-      exit(1);
-    }
+    FluxImplicitList flxImplicitList;
+    Compressible::fluxImplicit = flxImplicitList[setting.flux];
 
     switch (setting.temporalOrder) {
     case 1: timeIncrement<Compressible> = timeIncrementFirstOrder<Compressible>;

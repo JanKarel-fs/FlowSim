@@ -26,7 +26,7 @@ public:
   Vector2d uInit;
   int numOfBoundaries;
   map<string, string> usedBC;
-  int flux;
+  string flux;
   double p0;
   double rho0;
   double alpha;

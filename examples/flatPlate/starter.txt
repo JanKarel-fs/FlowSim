@@ -37,10 +37,10 @@ spatialOrder		2			//(1) 1st order, (2) 2nd order
 limiter			1			//(1) Barth-Jespersen, (2) Venkatakrishnan
 //////////////////////////////////////////////////////////////////////////////
 FLUX_SPLITTER
-flux			2			// (1) Upwind
+flux			Rusanov			// Upwind, Rusanov
 //////////////////////////////////////////////////////////////////////////////
 SYSTEM
-system			1			// (1) explicit, (2) implicit
+solver			1			// (1) explicit, (2) implicit
 convection		1			// (0) off, (1) on
 diffusion		1			// (0) off, (1) on
 nodeWeightType		LSM			// LSM, Weight
