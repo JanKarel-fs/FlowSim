@@ -1,5 +1,5 @@
 #ifndef LIMITER_HPP
-#define LINITER_HPP
+#define LIMITER_HPP
 
 #include "cellField.hpp"
 #include "grid.hpp"
