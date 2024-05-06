@@ -12,20 +12,20 @@ class Compressible;
 
 class PrimitiveVars {
 public:
-  double p;
+  double rho;
   Vector2d u;
   double T;
 
   PrimitiveVars() {};
-  PrimitiveVars(const double& P, const Vector2d& U, const double& t): p(P), u(U), T(t) {};
+  PrimitiveVars(const double& RHO, const Vector2d& U, const double& t): rho(RHO), u(U), T(t) {};
   ~PrimitiveVars() {};
 
   void zero() {
-    p = 0.; u = Vector2d(0., 0.); T = 0.;
+    rho = 0.; u = Vector2d(0., 0.); T = 0.;
   }
 
   void ones() {
-    p = 1.; u = Vector2d(1., 1.); T = 1.;
+    rho = 1.; u = Vector2d(1., 1.); T = 1.;
   }
 
   static PrimitiveVars set(const Compressible& w);
@@ -34,7 +34,7 @@ public:
 
   inline double operator[](int k) const {
     switch (k) {
-    case 0: return p;
+    case 0: return rho;
       break;
     case 1: return u.x;
       break;
@@ -47,7 +47,7 @@ public:
 
   inline double& operator[](int k) {
     switch (k) {
-    case 0: return p;
+    case 0: return rho;
       break;
     case 1: return u.x;
       break;
@@ -60,51 +60,51 @@ public:
 };
 
 inline PrimitiveVars operator+(const PrimitiveVars& a, const PrimitiveVars& b) {
-  return PrimitiveVars(a.p+b.p, a.u+b.u, a.T+b.T);
+  return PrimitiveVars(a.rho+b.rho, a.u+b.u, a.T+b.T);
 }
 
 inline PrimitiveVars operator-(const PrimitiveVars& a, const PrimitiveVars& b) {
-  return PrimitiveVars(a.p-b.p, a.u-b.u, a.T-b.T);
+  return PrimitiveVars(a.rho-b.rho, a.u-b.u, a.T-b.T);
 }
 
 inline PrimitiveVars operator*(const PrimitiveVars& a, const PrimitiveVars& b) {
-  return PrimitiveVars(a.p*b.p, a.u*b.u, a.T*b.T);
+  return PrimitiveVars(a.rho*b.rho, a.u*b.u, a.T*b.T);
 }
 
 template <typename S>
 inline PrimitiveVars operator*(const PrimitiveVars& a, const S& b) {
-  return PrimitiveVars(a.p*b, a.u*b, a.T*b);
+  return PrimitiveVars(a.rho*b, a.u*b, a.T*b);
 }
 
 template <typename S>
 inline PrimitiveVars operator*(const S& b, const PrimitiveVars& a) {
-  return PrimitiveVars(a.p*b, a.u*b, a.T*b);
+  return PrimitiveVars(a.rho*b, a.u*b, a.T*b);
 }
 
 template <typename S>
 inline PrimitiveVars operator/(const PrimitiveVars& a, const S& b) {
-  return PrimitiveVars(a.p/b, a.u/b, a.T/b);
+  return PrimitiveVars(a.rho/b, a.u/b, a.T/b);
 }
 
 inline PrimitiveVars operator+=(PrimitiveVars& a, const PrimitiveVars& b) {
-  a.p+=b.p; a.u+=b.u; a.T+=b.T;
+  a.rho+=b.rho; a.u+=b.u; a.T+=b.T;
   return a;
 }
 
 inline PrimitiveVars operator-=(PrimitiveVars& a, const PrimitiveVars& b) {
-  a.p-=b.p; a.u-=b.u; a.T-=b.T;
+  a.rho-=b.rho; a.u-=b.u; a.T-=b.T;
   return a;
 }
 
 template <typename S>
 inline PrimitiveVars operator*=(PrimitiveVars& a, const S& b) {
-  a.p*=b; a.u*=b; a.T*=b;
+  a.rho*=b; a.u*=b; a.T*=b;
   return a;
 }
 
 template <typename S>
 inline PrimitiveVars operator/=(PrimitiveVars& a, const S& b) {
-  a.p/=b; a.u/=b; a.T/=b;
+  a.rho/=b; a.u/=b; a.T/=b;
   return a;
 }
 

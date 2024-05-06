@@ -8,6 +8,6 @@
 #include "setting.hpp"
 
 double timeStep(const CellField<Compressible>& w, const Grid& g,
-		const Setting& setting);
+		Setting& setting);
 
 #endif

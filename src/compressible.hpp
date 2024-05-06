@@ -90,6 +90,10 @@ public:
 						      const Compressible& wr, const Vector2d& s);
   static pair<pair<Matrixd, Matrixd>, Compressible> RusanovImplicit(const Compressible& wl,
 						      const Compressible& wr, const Vector2d& s);
+
+  static pair<pair<Matrixd, Matrixd>, Compressible> fluxDissipativeImplicit(const Compressible& wl,
+					 const Compressible& wr, const Point2d& L, const Point2d& R,
+					 const Vector2<PrimitiveVars>& grad_pVars, const Vector2d& s);
   
   double p() const;
   double a() const;

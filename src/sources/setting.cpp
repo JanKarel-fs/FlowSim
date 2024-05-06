@@ -89,7 +89,18 @@ Setting::Setting(const string& fileName) {
 
   // nacitani informaci o case
   section = "TIME";
-  findSection(dataFile, "CFL", section, CFL);
+  findSection(dataFile, "CFL", section, CFLmax);
+  findSection(dataFile, "CFLbegin", section, CFL);
+  findSection(dataFile, "incrementIts", section, incrementIts);
+
+  if (incrementIts < 1) {
+    cout << "CFL incerement interations must be a poitive number!" << endl;
+    cout << "Variable \"incrementIts\" is set on 1!" << endl;
+
+    incrementIts = 1.;
+  }
+
+  incCoeff = pow(CFLmax/CFL, 1./incrementIts);
 
   // nacitani informaci o systemu
   section = "SYSTEM";
@@ -109,4 +120,9 @@ Setting::Setting(const string& fileName) {
   // nacitani informaci o ukladani
   section = "SAVING";
   findSection(dataFile, "stop", section, stop);
+}
+
+void Setting::updateCFL() {
+  CFL *= incCoeff;
+  CFL = min(CFL, CFLmax);
 }
