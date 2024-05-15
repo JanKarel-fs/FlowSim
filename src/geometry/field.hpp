@@ -96,6 +96,7 @@ public:
     for (int i=0; i<totalSize; i++) {
       data[i] = fld2.data[i];
     }
+    return *this;
   }
 };
   
